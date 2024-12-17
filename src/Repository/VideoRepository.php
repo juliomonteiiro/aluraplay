@@ -9,7 +9,9 @@ use PDO;
 
 class VideoRepository
 {
-    public function __construct(private PDO $pdo) {}
+    public function __construct(private PDO $pdo)
+    {
+    }
 
     public function add(Video $video): bool
     {
@@ -42,10 +44,11 @@ class VideoRepository
         if ($video->getFilePath() !== null) {
             $updateImageSql = ', image_path = :image_path';
         }
-        $sql = "UPDATE videos SET url = :url,
-        title = :title
-        $updateImageSql
-        image_path = :image_path WHERE id = :id;";
+        $sql = "UPDATE videos SET
+                  url = :url,
+                  title = :title
+                $updateImageSql
+              WHERE id = :id;";
         $statement = $this->pdo->prepare($sql);
 
         $statement->bindValue(':url', $video->url);
@@ -55,6 +58,7 @@ class VideoRepository
         if ($video->getFilePath() !== null) {
             $statement->bindValue(':image_path', $video->getFilePath());
         }
+
         return $statement->execute();
     }
 
@@ -89,6 +93,7 @@ class VideoRepository
         if ($videoData['image_path'] !== null) {
             $video->setFilePath($videoData['image_path']);
         }
+
         return $video;
     }
 }

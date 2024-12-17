@@ -114,7 +114,7 @@ body > header {
 
 }
 
-.erro {
+.formulario__titulo.erro {
     color: red;
     margin-top: 1rem;
 }
